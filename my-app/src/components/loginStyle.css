@@ -1,16 +1,17 @@
 p,
 div {
-  font-family: Lato;
+  font-family: "Vibur";
 }
-
+@import url(https://fonts.googleapis.com/css?family=Vibur);
 .wrapper {
-  height: 97vh;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url("../assets/disco-dba865f1.png");
+  background-size: cover;
 }
 
 .form-wrapper {
@@ -29,8 +30,7 @@ div {
 .form-wrapper > h2 {
   display: flex;
   justify-content: center;
-  font-family: "Segoe UI", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Vibur";
   font-size: 2em;
   font-weight: lighter;
   margin-top: 0.25em;
@@ -80,10 +80,6 @@ button:hover {
 
 .firstName,
 .lastName,
-.street,
-.city,
-.state,
-.zipCode,
 .email,
 .password {
   display: flex;

@@ -1,14 +1,14 @@
 import React from "react";
-import "./style.css";
+import "./signupStyle.css";
 
 const Regex = RegExp(
   /^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i
 );
 
 interface SignUpProps {
-  name?: any;
-  value?: any;
+  updateToken: Function;
 }
+
 interface SignUpState {
   email: string;
   password: string;
@@ -19,6 +19,23 @@ interface SignUpState {
 }
 
 export class SignUp extends React.Component<SignUpProps, SignUpState> {
+  constructor(props: SignUpProps) {
+    super(props);
+    const initialState = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      errors: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      },
+    };
+    this.state = initialState;
+    this.handleChange = this.handleChange.bind(this);
+  }
   handleChange = (event: any) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -39,19 +56,7 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
   };
 
   handleSubmit = (event: any) => {
-    // event.preventDefault();
-    // fetch('http://localhost:3000/user/register', {
-    //     method: 'POST',
-    //     body: JSON.stringify({user: {username: username, password: password}}),
-    //     headers: new Headers({
-    //         'Content-Type': 'application/json'
-    //     })
-    // })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         console.log(data);
-    //         props.updateToken(data.sessionToken)
-    //     })
+    event.preventDefault();
 
     event.preventDefault();
     let validity = true;
@@ -59,25 +64,26 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
       (val) => val.length > 0 && (validity = false)
     );
     if (validity === true) {
+      fetch("http://localhost:3000/user/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          user: { email: this.state.email, password: this.state.password },
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          this.props.updateToken(data.sessionToken);
+        });
+
       console.log("Registering can be done");
     } else {
       console.log("You cannot be registered!!!");
     }
   };
-
-  constructor(props: SignUpProps) {
-    super(props);
-    const initialState = {
-      email: "",
-      password: "",
-      errors: {
-        email: "",
-        password: "",
-      },
-    };
-    this.state = initialState;
-    this.handleChange = this.handleChange.bind(this);
-  }
 
   render() {
     const { errors } = this.state;
@@ -97,26 +103,6 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
             <div className="lastName">
               <label htmlFor="lastName">Last Name</label>
               <input type="text" name="lastName" onChange={this.handleChange} />
-            </div>
-            <div className="street">
-              <label htmlFor="street">Street</label>
-              <input type="text" name="street" onChange={this.handleChange} />
-            </div>
-            <div className="city">
-              <label htmlFor="city">City</label>
-              <input type="text" name="city" onChange={this.handleChange} />
-            </div>
-            <div className="state">
-              <label htmlFor="state">State</label>
-              <input type="state" name="state" onChange={this.handleChange} />
-            </div>
-            <div className="zipCode">
-              <label htmlFor="zipCode">Zip Code</label>
-              <input
-                type="zipCode"
-                name="zipCode"
-                onChange={this.handleChange}
-              />
             </div>
             <div className="email">
               <label htmlFor="email">Email</label>

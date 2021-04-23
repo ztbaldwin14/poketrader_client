@@ -1,9 +1,8 @@
-import React from 'react';
-import './App.css';
-import { SignUp } from './components/SignUpForm';
+import React from "react";
+import "./App.css";
+import { Auth } from "./components/Auth";
+
 function App() {
-   return (
-    <SignUp/>
-   );
+  return <Auth />;
 }
 export default App;
