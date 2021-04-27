@@ -1,15 +1,15 @@
 import React from "react";
-import "./signupStyle.css";
+import "../loginStyle.css";
 
 const Regex = RegExp(
   /^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i
 );
 
-interface SignUpProps {
+interface LoginProps {
   updateToken: Function;
 }
 
-interface SignUpState {
+interface LoginState {
   email: string;
   password: string;
   errors: {
@@ -18,23 +18,18 @@ interface SignUpState {
   };
 }
 
-export class SignUp extends React.Component<SignUpProps, SignUpState> {
-  constructor(props: SignUpProps) {
+export class Login extends React.Component<LoginProps, LoginState> {
+  constructor(props: LoginProps) {
     super(props);
     const initialState = {
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
       errors: {
-        firstName: "",
-        lastName: "",
         email: "",
         password: "",
       },
     };
     this.state = initialState;
-    this.handleChange = this.handleChange.bind(this);
   }
   handleChange = (event: any) => {
     event.preventDefault();
@@ -56,7 +51,7 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
   };
 
   handleSubmit = (event: any) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     event.preventDefault();
     let validity = true;
@@ -79,9 +74,9 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
           this.props.updateToken(data.sessionToken);
         });
 
-      console.log("Registering can be done");
+      console.log("Login Complete");
     } else {
-      console.log("You cannot be registered!!!");
+      console.log("You cannot be logged in");
     }
   };
 
@@ -90,20 +85,8 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
     return (
       <div className="wrapper">
         <div className="form-wrapper">
-          <h2>Sign Up</h2>
+          <h2>Login</h2>
           <form onSubmit={this.handleSubmit} noValidate>
-            <div className="firstName">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="lastName">
-              <label htmlFor="lastName">Last Name</label>
-              <input type="text" name="lastName" onChange={this.handleChange} />
-            </div>
             <div className="email">
               <label htmlFor="email">Email</label>
               <input type="email" name="email" onChange={this.handleChange} />
@@ -123,7 +106,7 @@ export class SignUp extends React.Component<SignUpProps, SignUpState> {
               )}
             </div>
             <div className="submit">
-              <button>Sign Me Up!</button>
+              <button>Sign In</button>
             </div>
           </form>
         </div>
